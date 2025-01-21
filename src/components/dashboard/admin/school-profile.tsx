@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export const SchoolProfile = () => {
   return (
@@ -31,13 +32,13 @@ export const SchoolProfile = () => {
             </div>
             <div>
               <p className='text-sm text-gray-500'>Website</p>
-              <a
+              <Link
                 href='http://localhost:3000/schools/edtheta-international-school'
                 target='_blank'>
                 <p className='font-medium underline text-emerald-600 cursor-pointer'>
                   www.edtheta.com/schools/edtheta-international-school
                 </p>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

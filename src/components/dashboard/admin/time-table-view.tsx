@@ -50,7 +50,7 @@ export const TimetableView = () => {
             </tr>
           </thead>
           <tbody>
-            {timeSlots.map((time, i) => (
+            {timeSlots.map((time) => (
               <tr key={time}>
                 <td className='border p-3 font-medium'>{time}</td>
                 {days.map((day) => (

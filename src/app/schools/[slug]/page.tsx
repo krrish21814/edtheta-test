@@ -6,7 +6,7 @@ import { SchoolContent } from "@/components/schools/details/school-content";
 import { SchoolHero } from "@/components/schools/details/school-hero";
 
 // This would typically come from your database
-const getSchoolData = (slug: string) => {
+const getSchoolData = () => {
   // Dummy data
   return {
     id: "1",
@@ -166,7 +166,8 @@ const mockReviews = [
 ];
 
 export default async function SchoolDetailPage({ params }: PageProps) {
-  const school = getSchoolData(params.slug);
+  console.log(params);
+  const school = getSchoolData();
 
   return (
     <div className='min-h-screen bg-gray-50'>

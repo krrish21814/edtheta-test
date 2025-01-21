@@ -2,22 +2,10 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardFooter,
-} from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Heart,
-  MessageCircle,
-  Send,
-  Bookmark,
-  MoreHorizontal,
-} from "lucide-react";
+import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 
 interface Post {
   id: string;
@@ -42,6 +30,7 @@ interface SchoolPostsProps {
 
 export function SchoolPosts({ school }: SchoolPostsProps) {
   // State for likes and bookmarks
+  console.log(school);
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
   const [bookmarkedPosts, setBookmarkedPosts] = useState<Set<string>>(
     new Set()

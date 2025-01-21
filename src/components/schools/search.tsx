@@ -9,7 +9,7 @@ const SchoolSearch = () => {
     null
   );
   const [isLoadingLocation, setIsLoadingLocation] = useState(true);
-
+  console.log(location);
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
