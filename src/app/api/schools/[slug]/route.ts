@@ -1,74 +1,47 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import School from "@/models/school";
 import dbConnect from "@/utils/db-connect";
-import type { NextApiRequest, NextApiResponse } from "next";
-import School from "../../../../models/school";
+import { NextRequest, NextResponse } from "next/server";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const { method } = req;
-  const { slug } = req.query;
-
+export async function GET(req: NextRequest) {
   await dbConnect();
 
-  switch (method) {
-    case "GET":
-      try {
-        const school = await School.findOne({ slug }).populate(
-          "principal",
-          "name email slug"
-        );
+  try {
+    const latitude = req.nextUrl.searchParams.get("latitude");
+    const longitude = req.nextUrl.searchParams.get("longitude");
+    const radius = req.nextUrl.searchParams.get("radius");
+    if (!latitude || !longitude || !radius) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "latitude, longitude, and radius are required",
+        },
+        { status: 400, statusText: "Missing keys" }
+      );
+    }
 
-        if (!school) {
-          return res
-            .status(404)
-            .json({ success: false, message: "School not found" });
-        }
+    const schools = await School.find({
+      geoLocation: {
+        $geoWithin: {
+          $centerSphere: [
+            [parseFloat(latitude), parseFloat(longitude)],
+            parseFloat(radius) / 6378.1, // Convert km to radians
+          ],
+        },
+      },
+    });
 
-        res.status(200).json({ success: true, data: school });
-      } catch (error: any) {
-        res.status(400).json({ success: false, message: error.message });
-      }
-      break;
-
-    case "PUT":
-      try {
-        const school = await School.findOneAndUpdate({ slug }, req.body, {
-          new: true,
-          runValidators: true,
-        });
-
-        if (!school) {
-          return res
-            .status(404)
-            .json({ success: false, message: "School not found" });
-        }
-
-        res.status(200).json({ success: true, data: school });
-      } catch (error: any) {
-        res.status(400).json({ success: false, message: error.message });
-      }
-      break;
-
-    case "DELETE":
-      try {
-        const deletedSchool = await School.findOneAndDelete({ slug });
-
-        if (!deletedSchool) {
-          return res
-            .status(404)
-            .json({ success: false, message: "School not found" });
-        }
-
-        res.status(200).json({ success: true, data: {} });
-      } catch (error: any) {
-        res.status(400).json({ success: false, message: error.message });
-      }
-      break;
-
-    default:
-      res.status(400).json({ success: false });
-      break;
+    return NextResponse.json(
+      { success: true, schools },
+      { status: 200, statusText: "schools fetched" }
+    );
+  } catch (error) {
+    const err = error as Error;
+    return NextResponse.json(
+      {
+        success: false,
+        message: err.message,
+      },
+      { status: 500, statusText: "bad request" }
+    );
   }
 }
