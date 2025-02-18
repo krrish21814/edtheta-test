@@ -1,18 +1,193 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { menuItems } from "./admin-nav"; // Assuming menuItems from the desktop nav is imported here
+import { useCurrentUser } from "@/hooks/user";
+import {
+  Home,
+  Users,
+  BookOpen,
+  GraduationCap,
+  Calendar,
+  ClipboardList,
+  Settings,
+  FileText,
+  BarChart2,
+  MessageSquare,
+  UserPlus,
+} from "lucide-react";
 
 export const MobileMenu = ({ role = "admin" }) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const items = menuItems[role] || []; // Fetch role-specific menu items
+  const { user } = useCurrentUser();
+  const [items, setMenuItems] = useState<any[]>([]);
 
+  useEffect(() => {
+    if (!user) return;
+    const schoolSlug = user?.school_slug;
+
+    const allMenuItems: any = {
+      admin: [
+        { icon: Home, label: "Overview", href: "/dashboard/school-123/admin" },
+        {
+          icon: Users,
+          label: "Faculty",
+          href: "/dashboard/school-123/admin/faculty",
+        },
+        {
+          icon: BookOpen,
+          label: "Classes",
+          href: "/dashboard/school-123/admin/classes",
+        },
+        {
+          icon: ClipboardList,
+          label: "Exams",
+          href: "/dashboard/school-123/admin/exams",
+        },
+        {
+          icon: BarChart2,
+          label: "Reports",
+          href: "/dashboard/school-123/admin/reports",
+        },
+        {
+          icon: FileText,
+          label: "Course Materials",
+          href: "/dashboard/admin/materials",
+        },
+        {
+          icon: UserPlus,
+          label: "Admissions",
+          href: "/dashboard/admin/admission",
+        },
+        {
+          icon: Bell,
+          label: "Notifications",
+          href: "/dashboard/admin/notifications",
+        },
+        {
+          icon: Settings,
+          label: "Settings",
+          href: "/dashboard/admin/settings",
+        },
+      ],
+      principal: [
+        {
+          icon: Home,
+          label: "Overview",
+          href: `/dashboard/${schoolSlug}/principal/`,
+        },
+        {
+          icon: Users,
+          label: "Faculty",
+          href: `/dashboard/${schoolSlug}/principal/faculty`,
+        },
+        {
+          icon: GraduationCap,
+          label: "Students",
+          href: `/dashboard/${schoolSlug}/principal/students`,
+        },
+        {
+          icon: BookOpen,
+          label: "Classes",
+          href: `/dashboard/${schoolSlug}/principal/classes`,
+        },
+        {
+          icon: BarChart2,
+          label: "Performance Reports",
+          href: `/dashboard/${schoolSlug}/principal/reports`,
+        },
+        {
+          icon: UserPlus,
+          label: "Admissions",
+          href: `/dashboard/${schoolSlug}/principal/admission`,
+        },
+        {
+          icon: Bell,
+          label: "Notifications",
+          href: `/dashboard/${schoolSlug}/principal/notifications`,
+        },
+        {
+          icon: MessageSquare,
+          label: "Feedback",
+          href: `/dashboard/${schoolSlug}/principal/feedback`,
+        },
+      ],
+      teacher: [
+        { icon: Home, label: "Dashboard", href: "/dashboard/teacher" },
+        {
+          icon: BookOpen,
+          label: "Classes",
+          href: "/dashboard/teacher/classes",
+        },
+        {
+          icon: ClipboardList,
+          label: "Assignments",
+          href: "/dashboard/teacher/assignments",
+        },
+        {
+          icon: Calendar,
+          label: "Timetable",
+          href: "/dashboard/teacher/timetable",
+        },
+        {
+          icon: FileText,
+          label: "Course Materials",
+          href: "/dashboard/teacher/materials",
+        },
+        {
+          icon: Bell,
+          label: "Notifications",
+          href: "/dashboard/teacher/notifications",
+        },
+        {
+          icon: MessageSquare,
+          label: "Student Feedback",
+          href: "/dashboard/teacher/feedback",
+        },
+      ],
+      student: [
+        { icon: Home, label: "Dashboard", href: "/dashboard/student" },
+        {
+          icon: BookOpen,
+          label: "My Classes",
+          href: "/dashboard/student/classes",
+        },
+        {
+          icon: ClipboardList,
+          label: "Assignments",
+          href: "/dashboard/student/assignments",
+        },
+        {
+          icon: FileText,
+          label: "Study Materials",
+          href: "/dashboard/student/materials",
+        },
+        {
+          icon: Calendar,
+          label: "Timetable",
+          href: "/dashboard/student/timetable",
+        },
+        {
+          icon: BarChart2,
+          label: "Performance",
+          href: "/dashboard/student/performance",
+        },
+        {
+          icon: Bell,
+          label: "Notifications",
+          href: "/dashboard/student/notifications",
+        },
+      ],
+    };
+
+    const items = allMenuItems[role] || [];
+    setMenuItems(items);
+  }, [user]);
   return (
     <div className='lg:hidden'>
       {/* Mobile Header */}

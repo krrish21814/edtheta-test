@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -13,11 +14,7 @@ interface FacultyMember {
   imageUrl: string; // Image URL for faculty
 }
 
-interface FacultySectionProps {
-  faculty: FacultyMember[];
-}
-
-export const FacultySection = ({ faculty }: FacultySectionProps) => {
+export const FacultySection = () => {
   const [newFaculty, setNewFaculty] = useState({
     name: "",
     title: "",
@@ -57,7 +54,7 @@ export const FacultySection = ({ faculty }: FacultySectionProps) => {
     setShowDeleteConfirmation(false);
     setFacultyToDelete(null);
   };
-
+  const faculty: any[] = [];
   return (
     <div className='mt-2'>
       {/* Add Faculty Button */}

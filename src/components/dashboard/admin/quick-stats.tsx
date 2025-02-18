@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { getStatsConfig } from "@/lib/stats";
+import DynamicIcon from "@/components/dynamic-icon";
 import { motion } from "framer-motion";
 
-export const QuickStats = () => {
-  const stats = getStatsConfig("admin");
+export const QuickStats = ({ stats }: { stats: any }) => {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
       {stats.map((stat: any, index: number) => (
@@ -23,7 +22,10 @@ export const QuickStats = () => {
               </p>
             </div>
             <div className='p-3 bg-emerald-100 rounded-full'>
-              <stat.icon className='w-6 h-6 text-emerald-600' />
+              <DynamicIcon
+                name={stat.icon}
+                className='w-6 h-6 text-emerald-600'
+              />
             </div>
           </div>
         </motion.div>

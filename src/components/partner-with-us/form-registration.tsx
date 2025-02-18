@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import SuccessAnimation from "./success-animation";
 import ChipSelection from "./chip-selection";
 import { accreditationOptions, amenitiesOptions } from "@/utils/constants";
-import { schoolMethods } from "@/lib/api-methods";
+import { schoolMethods } from "@/lib/services/schools";
 
 interface FormData {
   name: string;

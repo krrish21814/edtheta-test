@@ -2,20 +2,25 @@ export interface School {
   id: string;
   slug: string;
   name: string;
+  schoolCode: string;
   address: string;
-  rating: number;
-  image: string;
-  timing: string;
+  ratings: number;
+  photo?: string;
+  distanceAway?: string;
+  timing: {
+    start: string;
+    end: string;
+  };
   board: string;
   phone: string;
   email: string;
-  website: string;
+  website?: string;
   description: string;
   founded: string;
   studentCount: number;
   teacherCount: number;
   classSize: number;
-  facilities: string[];
+  amenities: string[];
   accreditations: string[];
   events: Event[];
   announcements: Announcement[];
@@ -109,3 +114,4 @@ export interface TimeSlot {
   teacherId: string;
   divisionId: string;
 }
+
