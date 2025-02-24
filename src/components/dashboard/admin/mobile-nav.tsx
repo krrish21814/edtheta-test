@@ -28,8 +28,9 @@ export const MobileMenu = ({ role = "admin" }) => {
   const [items, setMenuItems] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!user) return;
-    const schoolSlug = user?.school_slug;
+    // if (!user) return;
+       // const schoolSlug = user?.school_slug;
+    const schoolSlug = "SCH234"
 
     const allMenuItems: any = {
       admin: [

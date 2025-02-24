@@ -15,8 +15,9 @@ export const SchoolProfile = () => {
   const handleGetSchool = async () => {
     try {
       setLoading(true);
-      const user = await UserGetAction();
-      const schoolData = await SchoolProfileGetAction(user?.school_slug || "");
+      // const user = await UserGetAction();
+      // const schoolData = await SchoolProfileGetAction(user?.school_slug || "");
+      const schoolData = await SchoolProfileGetAction("SCH234"); 
       setSchool(schoolData.data || null);
     } catch {
       setSchool(null);

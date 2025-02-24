@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import { useCurrentUser } from "@/hooks/user";
 import Image from "next/image";
+import { IUser } from "@/models/user";
+
 
 // Menus categorized by roles
 
@@ -28,12 +30,35 @@ export const AdminNav = ({ role = "admin" }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
 
-  const { user } = useCurrentUser();
+  // const { user } = useCurrentUser();
+
+  const user: IUser = {
+    email: "john.doe@example.com",
+    password: "SecurePass123!",
+    name: "John Doe",
+    isBlocked: false,
+    isVerified: true,
+    isApproved: true,
+    role: "student",
+    slug: "john-doe",
+    phone: "+911234567890",
+    isMobileVerified: true,
+    dateOfBirth: new Date("1990-05-15"),
+    geoCode: {
+      lat: 28.6139,
+      lng: 77.2090
+    },
+    comparePassword: async (candidatePassword: string): Promise<boolean> => {
+      return candidatePassword === "SecurePass123!";
+    }
+  };
+  
   const [items, setMenuItems] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!user) return;
-    const schoolSlug = user?.school_slug;
+    // if (!user) return;
+    // const schoolSlug = user?.school_slug;
+    const schoolSlug = "SCH234"
 
     const allMenuItems: any = {
       admin: [

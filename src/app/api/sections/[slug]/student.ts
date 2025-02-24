@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Section from "@/models/section";
-import User from "@/models/user";
+import {User} from "@/models/user";
 import dbConnect from "@/utils/db-connect";
 import type { NextApiRequest, NextApiResponse } from "next";
 

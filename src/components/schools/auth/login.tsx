@@ -49,7 +49,7 @@ export default function Login() {
         setError(response.message);
       }
     } catch (err) {
-      console.log(err);
+      console.log("error bro",err);
       setError("Login failed. Please try again.");
     } finally {
       setIsLoading(false);

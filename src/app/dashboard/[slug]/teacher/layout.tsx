@@ -1,11 +1,14 @@
 import { AdminNav } from "@/components/dashboard/admin/admin-nav";
 import { MobileMenu } from "@/components/dashboard/admin/mobile-nav";
+import { getCurrentUser } from "@/utils/authentication";
+import { redirect } from "next/navigation";
 
 export default async function AdminDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  //  const user = await getCurrentUser();
   // if (!user || user.role !== "admin") {
   //   redirect("/login");
   // }
